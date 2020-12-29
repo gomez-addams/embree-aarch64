@@ -47,6 +47,8 @@ namespace embree
     return "iOS Simulator (x64)";
 #elif defined(TARGET_OS_IPHONE) && defined(__aarch64__) && defined(__ARM_NEON)
     return "iOS (aarch64 / arm64)";
+#elif defined(__MACOSX__) && defined(__ARM_NEON)
+    return "Mac OS X (arm64)";
 #elif defined(__MACOSX__) && !defined(__X86_64__)
     return "Mac OS X (32bit)";
 #elif defined(__MACOSX__) && defined(__X86_64__)
@@ -196,7 +198,11 @@ namespace embree
     case CPU::CORE2                   : return "Core2";
     case CPU::CORE1                   : return "Core";
     case CPU::ARM                     : return "Arm";
+#if defined(__MACOSX__) && defined(__ARM_NEON)
+    case CPU::UNKNOWN                 : return "Apple Silicon";
+#else
     case CPU::UNKNOWN                 : return "Unknown CPU";
+#endif
     }
     return "Unknown CPU (error)";
   }
